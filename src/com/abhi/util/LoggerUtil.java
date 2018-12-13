@@ -140,12 +140,12 @@ public class LoggerUtil {
 	}
 
 	public static void mergetable(String t1, String t2, String joiner, String updateString) {
-		System.out.println("*********** Start Of Merge Query And Data ***********");
+		logger.info("*********** Start Of Merge Query And Data ***********");
 		String query = "MERGE INTO " + t1 + " t1 USING " + t2 + " t2 ON t2." + joiner + "=t1." + joiner
 				+ "WHEN MATCHED THEN UPDATE SET ";
-		System.out.println(query);
-		System.out.println(updateString);
-		System.out.println("*********** End Of Merge Query And Data ***********");
+		logger.info(query);
+		logger.info(updateString);
+		logger.info("*********** End Of Merge Query And Data ***********");
 		// TODO Auto-generated method stub
 
 	}
