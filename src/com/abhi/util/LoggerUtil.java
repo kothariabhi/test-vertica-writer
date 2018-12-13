@@ -1,6 +1,5 @@
 package com.abhi.util;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,19 +13,16 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
 
 public class LoggerUtil {
-	
-	public static final ObjectMapper OBJECTMAPPER = new ObjectMapper()
-			.registerModule(new SimpleModule()
-			.addDeserializer(Object.class, new CustomDateDeseralizer())
-			.addSerializer(new CustomDateSerializer())) ;
-	
+
+	public static final ObjectMapper OBJECTMAPPER = new ObjectMapper().registerModule(new SimpleModule()
+			.addDeserializer(Object.class, new CustomDateDeseralizer()).addSerializer(new CustomDateSerializer()));
 
 	@SuppressWarnings("unchecked")
 	public static Object getObjectFromJson(String json, Class clas) {
 		Gson gson = new Gson();
 		return gson.fromJson(json, clas);
 	}
-	
+
 	public static long[] getDOWDayTimefromTS(long ts) throws ParseException {
 		String tsStr = String.valueOf(ts);
 		if ((tsStr).trim().length() == 14) {
@@ -44,7 +40,7 @@ public class LoggerUtil {
 		ret[3] = Long.valueOf(dateStr);
 		return ret;
 	}
-	
+
 	public static int[] getBod(String bod) {
 		// TODO Auto-generated method stub
 		int bodData[] = new int[3];
@@ -56,7 +52,7 @@ public class LoggerUtil {
 		return bodData;
 
 	}
-	
+
 	public static String getListAsCsvString(List<Object> list) {
 		StringBuilder sb = new StringBuilder();
 		for (Object str : list) {
@@ -67,13 +63,13 @@ public class LoggerUtil {
 		}
 		return sb.toString();
 	}
-	
-	public static void pushForFurtherProcessing(String table, String header, List<String> rows) {
-		System.out.println("Table : " + table);
-		System.out.println(header);
-		for (String row : rows) {
-			System.out.println(row);
-		}
+
+	public static void pushForFurtherProcessing(String table, String header, String rows) {
+		System.out.println("*********** Start Of Query And Data ***********");
+		String query = "copy " + table + "(" + header + ") from stdin delimiter ','";
+		System.out.println(query);
+		System.out.println("(" + rows + ")");
+		System.out.println("*********** End Of Query And Data ***********");
 	}
 	
 	public static void pushForUpdateInVertica(String table, String key, String value) {
@@ -84,12 +80,25 @@ public class LoggerUtil {
 		// trid: $clientid-$msgid-$userid-$automationid-$ts
 		if (trid == null || trid.equals("None"))
 			return null;
-		StringTokenizer st = new StringTokenizer(trid,"-");
+		StringTokenizer st = new StringTokenizer(trid, "-");
 		if (st.countTokens() < 5)
-			throw new IllegalArgumentException("Incorrect trid Format, exptected: trid: $clientid-$msgid-$userid-$automationid-$ts");
-		String ret[] = new String[6]; int i =0;
+			throw new IllegalArgumentException(
+					"Incorrect trid Format, exptected: trid: $clientid-$msgid-$userid-$automationid-$ts");
+		String ret[] = new String[6];
+		int i = 0;
 		while (st.hasMoreTokens()) {
-	         ret[i] = st.nextToken();i++;
-	    }return ret;
+			ret[i] = st.nextToken();
+			i++;
+		}
+		return ret;
+	}
+
+	public static String listToCsvString(String dataString, List<Object> data) {
+		String delimiter = "";
+		if (!dataString.isEmpty()) {
+			delimiter = "/n";
+		}
+		dataString = dataString + delimiter + getListAsCsvString(data);
+		return dataString;
 	}
 }
