@@ -1,5 +1,11 @@
 package com.abhi.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +15,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.io.FileUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -74,12 +81,12 @@ public class LoggerUtil {
 		logger.info("(" + rows + ")");
 		logger.info("*********** End Of Query And Data ***********");
 	}
-	
+
 	public static void pushForUpdateInVertica(String table, String key, String value, String where) {
-		
+
 	}
-	
-	public static String[] getTrIDDetails(String trid){
+
+	public static String[] getTrIDDetails(String trid) {
 		// trid: $clientid-$msgid-$userid-$automationid-$ts
 		if (trid == null || trid.equals("None"))
 			return null;
@@ -104,4 +111,43 @@ public class LoggerUtil {
 		dataString = dataString + delimiter + getListAsCsvString(data);
 		return dataString;
 	}
+
+	public static String listToCommaString(String dataString, List<Object> data) {
+		String delimiter = "";
+		if (!dataString.isEmpty()) {
+			delimiter = ",";
+		}
+		dataString = dataString + delimiter + getListAsCsvString(data);
+		return dataString;
+	}
+
+	public static Reader getFileReader(String urlstr) throws IOException {
+		String FileName = urlstr.substring(urlstr.lastIndexOf("/"));
+		URL url = new URL(urlstr);
+		String path = "/tmp/" + FileName;
+		File file = new File(path);
+		file.deleteOnExit();
+		FileUtils.copyURLToFile(url, file);
+
+		FileInputStream fis = new FileInputStream(file);
+		return new InputStreamReader(fis, "UTF-8");
+	}
+
+	public static Object getStringOp(Object value) {
+		// TODO Auto-generated method stub
+		Object data = "'" + value + "'";
+		return data;
+	}
+
+	public static void mergetable(String t1, String t2, String joiner, String updateString) {
+		System.out.println("*********** Start Of Merge Query And Data ***********");
+		String query = "MERGE INTO " + t1 + " t1 USING " + t2 + " t2 ON t2." + joiner + "=t1." + joiner
+				+ "WHEN MATCHED THEN UPDATE SET ";
+		System.out.println(query);
+		System.out.println(updateString);
+		System.out.println("*********** End Of Merge Query And Data ***********");
+		// TODO Auto-generated method stub
+
+	}
+
 }
