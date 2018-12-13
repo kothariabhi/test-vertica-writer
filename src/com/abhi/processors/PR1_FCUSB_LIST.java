@@ -3,6 +3,7 @@ package com.abhi.processors;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.abhi.pojo.FcUsbList;
 import com.abhi.util.LoggerUtil;
@@ -27,7 +28,7 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 			boolean toBeBlacklisted = true;
 			if (usb.getType().equals("bounced")) {
 				table = schema + ".userDetails_e_bnc";
-				if (usb.getBounceType().equals("")) {
+				if (usb.getBounceType().equalsIgnoreCase("SOFTBOUNCE")) {
 					toBeBlacklisted = false;
 				}
 			} else if (usb.getType().equals("unsubscribed")) {
@@ -38,7 +39,9 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 			rows.add(LoggerUtil.getListAsCsvString(Arrays.asList(userId, msgId, automationId, act[1], act[3])));
 			LoggerUtil.pushForFurtherProcessing(table, header, rows);
 			
-			
+			if (toBeBlacklisted) {
+				LoggerUtil.pushForUpdateInVertica(table, "bl", "1");
+			}
 			
 			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {

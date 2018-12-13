@@ -76,6 +76,10 @@ public class LoggerUtil {
 		}
 	}
 	
+	public static void pushForUpdateInVertica(String table, String key, String value) {
+		
+	}
+	
 	public static String[] getTrIDDetails(String trid){
 		// trid: $clientid-$msgid-$userid-$automationid-$ts
 		if (trid == null || trid.equals("None"))
