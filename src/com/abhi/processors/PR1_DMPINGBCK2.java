@@ -3,17 +3,20 @@ package com.abhi.processors;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.abhi.pojo.SmsDlr;
 import com.abhi.pojo.SmsDlrMap;
 import com.abhi.util.LoggerUtil;
 
 public class PR1_DMPINGBCK2 extends AbstractTask {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + kafkaString);
 			SmsDlrMap dlrMap = (SmsDlrMap) LoggerUtil.getObjectFromJson(kafkaString, SmsDlrMap.class);
 			String datastring = "";
 			String schema = "s_" + dlrMap.getClientId(), status = dlrMap.getStatus(), header = "uid,mid,aid,ad,adat",
@@ -33,10 +36,9 @@ public class PR1_DMPINGBCK2 extends AbstractTask {
 			}
 
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

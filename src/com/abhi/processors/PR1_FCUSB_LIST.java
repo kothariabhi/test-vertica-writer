@@ -2,19 +2,23 @@ package com.abhi.processors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 import com.abhi.pojo.FcUsbList;
 import com.abhi.util.LoggerUtil;
 
 public class PR1_FCUSB_LIST extends AbstractTask {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + kafkaString);
 			FcUsbList usb = (FcUsbList) LoggerUtil.getObjectFromJson(kafkaString, FcUsbList.class);
 			List<String> rows = new ArrayList<String>();
 			String trIdArr[] = LoggerUtil.getTrIDDetails(usb.getTrId());
@@ -43,13 +47,12 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
 
 			if (toBeBlacklisted) {
-                                LoggerUtil.pushForUpdateInVertica(table, "bl", "1");
-                        }
+				LoggerUtil.pushForUpdateInVertica(table, "bl", "1", "uid = " + userId);
+			}
 
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

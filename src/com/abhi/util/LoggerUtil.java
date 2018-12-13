@@ -8,11 +8,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
 
 public class LoggerUtil {
+	private static Logger logger = Logger.getLogger(LoggerUtil.class);
 
 	public static final ObjectMapper OBJECTMAPPER = new ObjectMapper().registerModule(new SimpleModule()
 			.addDeserializer(Object.class, new CustomDateDeseralizer()).addSerializer(new CustomDateSerializer()));
@@ -65,14 +68,14 @@ public class LoggerUtil {
 	}
 
 	public static void pushForFurtherProcessing(String table, String header, String rows) {
-		System.out.println("*********** Start Of Query And Data ***********");
+		logger.info("*********** Start Of Query And Data ***********");
 		String query = "copy " + table + "(" + header + ") from stdin delimiter ','";
-		System.out.println(query);
-		System.out.println("(" + rows + ")");
-		System.out.println("*********** End Of Query And Data ***********");
+		logger.info(query);
+		logger.info("(" + rows + ")");
+		logger.info("*********** End Of Query And Data ***********");
 	}
 	
-	public static void pushForUpdateInVertica(String table, String key, String value) {
+	public static void pushForUpdateInVertica(String table, String key, String value, String where) {
 		
 	}
 	

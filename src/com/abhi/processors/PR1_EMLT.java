@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.abhi.pojo.EmLt;
 import com.abhi.util.LoggerUtil;
 
 public class PR1_EMLT extends AbstractTask {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + kafkaString);
 			EmLt emLt = (EmLt) LoggerUtil.getObjectFromJson(kafkaString, EmLt.class);
 			String rows = "";
 			int[] bodData = LoggerUtil.getBod(String.valueOf(emLt.getBod()));
@@ -30,10 +33,9 @@ public class PR1_EMLT extends AbstractTask {
 			rows = LoggerUtil.getListAsCsvString(data);
 
 			LoggerUtil.pushForFurtherProcessing(table, header, rows);
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

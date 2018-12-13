@@ -3,17 +3,20 @@ package com.abhi.processors;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.abhi.pojo.LTOT;
 import com.abhi.pojo.LTOTMap;
 import com.abhi.util.LoggerUtil;
 
 public class PR1_BATCH_EMLT extends AbstractTask {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + kafkaString);
 			LTOTMap ltotMap = (LTOTMap) LoggerUtil.getObjectFromJson(kafkaString, LTOTMap.class);
 			String openString = "", clickString = "";
 			String openHeader = "uid,mid,aid,b,o,d,ad,adat", clickHeader = "uid,mid,aid,fid,b,o,d,ad,adat";
@@ -38,10 +41,9 @@ public class PR1_BATCH_EMLT extends AbstractTask {
 			LoggerUtil.pushForFurtherProcessing(openTable, openHeader, openString);
 			LoggerUtil.pushForFurtherProcessing(clickTable, clickHeader, clickString);
 
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

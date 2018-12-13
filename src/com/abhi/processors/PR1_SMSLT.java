@@ -3,16 +3,19 @@ package com.abhi.processors;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.abhi.pojo.SmsLt;
 import com.abhi.util.LoggerUtil;
 
 public class PR1_SMSLT extends AbstractTask {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + kafkaString);
 			String datastring = "";
 			SmsLt smsLt = (SmsLt) LoggerUtil.getObjectFromJson(kafkaString, SmsLt.class);
 			int[] bodData = LoggerUtil.getBod(String.valueOf(smsLt.getAgentCode()));
@@ -24,10 +27,9 @@ public class PR1_SMSLT extends AbstractTask {
 			datastring = LoggerUtil.listToCsvString(datastring, data);
 
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage());
 		}
 	}
 
