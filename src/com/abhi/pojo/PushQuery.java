@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PushQuery {
-	
-	private Integer userId; //can be null
-	private int clientId ;
+	private Integer userId; // can be null
+	private int clientId;
 	private String appId;
 	private String pushId;
 	private String token;
@@ -40,7 +39,6 @@ public class PushQuery {
 	private int pts;
 	private int sts;
 	private String deepLink;
-	private String userAgent;
 	private int bod;
 	private String notificationType;
 	private String uniqueId;
@@ -58,43 +56,46 @@ public class PushQuery {
 	private String clickLink;
 	private Integer clickLinkId;
 	private Integer msgId;
+	private Integer mid;
 	private String cg;
 	private Integer cgRepeat;
-	
+
+	@Override
+	public String toString() {
+		return "PushQuery [userId=" + userId + ", clientId=" + clientId + ", appId=" + appId + ", pushId=" + pushId
+				+ ", token=" + token + ", identity=" + identity + ", action=" + action + ", osType=" + osType
+				+ ", osId=" + osId + ", osVersion=" + osVersion + ", appVersion=" + appVersion + ", sdkVersion="
+				+ sdkVersion + ", trId=" + trId + ", location=" + location + ", ts=" + ts + ", cts=" + cts + ", tsDate="
+				+ tsDate + ", ctsDate=" + ctsDate + ", lat=" + lat + ", lng=" + lng + ", latDouble=" + latDouble
+				+ ", lngDouble=" + lngDouble + ", payload=" + payload + ", payloadMap=" + payloadMap + ", device="
+				+ device + ", identified=" + identified + ", sessionId=" + sessionId + ", tx=" + tx + ", eventId="
+				+ eventId + ", messageId=" + messageId + ", channelId=" + channelId + ", pts=" + pts + ", sts=" + sts
+				+ ", deepLink=" + deepLink + ", bod=" + bod + ", notificationType=" + notificationType + ", uniqueId="
+				+ uniqueId + ", clientKey=" + clientKey + ", deviceDetails=" + deviceDetails + ", make=" + make
+				+ ", model=" + model + ", automationId=" + automationId + ", eventType=" + eventType + ", atcm=" + atcm
+				+ ", atci=" + atci + ", oldToken=" + oldToken + ", coordinates=" + coordinates + ", apnClickLink="
+				+ apnClickLink + ", clickLink=" + clickLink + ", clickLinkId=" + clickLinkId + ", msgId=" + msgId
+				+ ", mid=" + mid + ", cg=" + cg + ", cgRepeat=" + cgRepeat + "]";
+	}
+
+	public String getDeviceDetails() {
+		return deviceDetails;
+	}
+
+	public void setDeviceDetails(String deviceDetails) {
+		this.deviceDetails = deviceDetails;
+	}
+
+	public Integer getMsgId() {
+		return msgId;
+	}
+
+	public void setMsgId(Integer msgId) {
+		this.msgId = msgId;
+	}
+
 	public PushQuery() {
 		super();
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public int getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-
-	public String getPushId() {
-		return pushId;
-	}
-
-	public void setPushId(String pushId) {
-		this.pushId = pushId;
 	}
 
 	public String getToken() {
@@ -120,55 +121,7 @@ public class PushQuery {
 	public void setAction(String action) {
 		this.action = action;
 	}
-
-	public String getOsType() {
-		return osType;
-	}
-
-	public void setOsType(String osType) {
-		this.osType = osType;
-	}
-
-	public Integer getOsId() {
-		return osId;
-	}
-
-	public void setOsId(Integer osId) {
-		this.osId = osId;
-	}
-
-	public String getOsVersion() {
-		return osVersion;
-	}
-
-	public void setOsVersion(String osVersion) {
-		this.osVersion = osVersion;
-	}
-
-	public String getAppVersion() {
-		return appVersion;
-	}
-
-	public void setAppVersion(String appVersion) {
-		this.appVersion = appVersion;
-	}
-
-	public String getSdkVersion() {
-		return sdkVersion;
-	}
-
-	public void setSdkVersion(String sdkVersion) {
-		this.sdkVersion = sdkVersion;
-	}
-
-	public String getTrId() {
-		return trId;
-	}
-
-	public void setTrId(String trId) {
-		this.trId = trId;
-	}
-
+	
 	public String getLocation() {
 		return location;
 	}
@@ -191,22 +144,6 @@ public class PushQuery {
 
 	public void setCts(long cts) {
 		this.cts = cts;
-	}
-
-	public Date getTsDate() {
-		return tsDate;
-	}
-
-	public void setTsDate(Date tsDate) {
-		this.tsDate = tsDate;
-	}
-
-	public Date getCtsDate() {
-		return ctsDate;
-	}
-
-	public void setCtsDate(Date ctsDate) {
-		this.ctsDate = ctsDate;
 	}
 
 	public String getLat() {
@@ -241,22 +178,6 @@ public class PushQuery {
 		this.lngDouble = lngDouble;
 	}
 
-	public List<Map<String, Object>> getPayload() {
-		return payload;
-	}
-
-	public void setPayload(List<Map<String, Object>> payload) {
-		this.payload = payload;
-	}
-
-	public Map<String, Object> getPayloadMap() {
-		return payloadMap;
-	}
-
-	public void setPayloadMap(Map<String, Object> payloadMap) {
-		this.payloadMap = payloadMap;
-	}
-
 	public String getDevice() {
 		return device;
 	}
@@ -273,12 +194,20 @@ public class PushQuery {
 		this.identified = identified;
 	}
 
-	public String getSessionId() {
-		return sessionId;
+	public Date getTsDate() {
+		return tsDate;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public void setTsDate(Date tsDate) {
+		this.tsDate = tsDate;
+	}
+
+	public Date getCtsDate() {
+		return ctsDate;
+	}
+
+	public void setCtsDate(Date ctsDate) {
+		this.ctsDate = ctsDate;
 	}
 
 	public long getTx() {
@@ -287,30 +216,6 @@ public class PushQuery {
 
 	public void setTx(long tx) {
 		this.tx = tx;
-	}
-
-	public int getEventId() {
-		return eventId;
-	}
-
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
-	}
-
-	public String getMessageId() {
-		return messageId;
-	}
-
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
-	}
-
-	public int getChannelId() {
-		return channelId;
-	}
-
-	public void setChannelId(int channelId) {
-		this.channelId = channelId;
 	}
 
 	public int getPts() {
@@ -329,60 +234,12 @@ public class PushQuery {
 		this.sts = sts;
 	}
 
-	public String getDeepLink() {
-		return deepLink;
-	}
-
-	public void setDeepLink(String deepLink) {
-		this.deepLink = deepLink;
-	}
-
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
-
 	public int getBod() {
 		return bod;
 	}
 
 	public void setBod(int bod) {
 		this.bod = bod;
-	}
-
-	public String getNotificationType() {
-		return notificationType;
-	}
-
-	public void setNotificationType(String notificationType) {
-		this.notificationType = notificationType;
-	}
-
-	public String getUniqueId() {
-		return uniqueId;
-	}
-
-	public void setUniqueId(String uniqueId) {
-		this.uniqueId = uniqueId;
-	}
-
-	public String getClientKey() {
-		return clientKey;
-	}
-
-	public void setClientKey(String clientKey) {
-		this.clientKey = clientKey;
-	}
-
-	public String getDeviceDetails() {
-		return deviceDetails;
-	}
-
-	public void setDeviceDetails(String deviceDetails) {
-		this.deviceDetails = deviceDetails;
 	}
 
 	public String getMake() {
@@ -441,12 +298,12 @@ public class PushQuery {
 		this.oldToken = oldToken;
 	}
 
-	public List<Double> getCoordinates() {
-		return coordinates;
+	public int getEventId() {
+		return eventId;
 	}
 
-	public void setCoordinates(List<Double> coordinates) {
-		this.coordinates = coordinates;
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
 	}
 
 	public String getApnClickLink() {
@@ -457,28 +314,30 @@ public class PushQuery {
 		this.apnClickLink = apnClickLink;
 	}
 
-	public String getClickLink() {
-		return clickLink;
-	}
-
 	public void setClickLink(String clickLink) {
 		this.clickLink = clickLink;
+
+	}
+
+	public String getClickLink() {
+		return clickLink;
+
+	}
+
+	public void setClickLinkId(Integer id) {
+		this.clickLinkId = id;
 	}
 
 	public Integer getClickLinkId() {
-		return clickLinkId;
+		return this.clickLinkId;
 	}
 
-	public void setClickLinkId(Integer clickLinkId) {
-		this.clickLinkId = clickLinkId;
+	public List<Double> getCoordinates() {
+		return coordinates;
 	}
 
-	public Integer getMsgId() {
-		return msgId;
-	}
-
-	public void setMsgId(Integer msgId) {
-		this.msgId = msgId;
+	public void setCoordinates(List<Double> coordinates) {
+		this.coordinates = coordinates;
 	}
 
 	public String getCg() {
@@ -489,6 +348,14 @@ public class PushQuery {
 		this.cg = cg;
 	}
 
+	public Integer getMid() {
+		return mid;
+	}
+
+	public void setMid(Integer mid) {
+		this.mid = mid;
+	}
+
 	public Integer getCgRepeat() {
 		return cgRepeat;
 	}
@@ -497,22 +364,156 @@ public class PushQuery {
 		this.cgRepeat = cgRepeat;
 	}
 
-	@Override
-	public String toString() {
-		return "PushQuery [userId=" + userId + ", clientId=" + clientId + ", appId=" + appId + ", pushId=" + pushId
-				+ ", token=" + token + ", identity=" + identity + ", action=" + action + ", osType=" + osType
-				+ ", osId=" + osId + ", osVersion=" + osVersion + ", appVersion=" + appVersion + ", sdkVersion="
-				+ sdkVersion + ", trId=" + trId + ", location=" + location + ", ts=" + ts + ", cts=" + cts + ", tsDate="
-				+ tsDate + ", ctsDate=" + ctsDate + ", lat=" + lat + ", lng=" + lng + ", latDouble=" + latDouble
-				+ ", lngDouble=" + lngDouble + ", payload=" + payload + ", payloadMap=" + payloadMap + ", device="
-				+ device + ", identified=" + identified + ", sessionId=" + sessionId + ", tx=" + tx + ", eventId="
-				+ eventId + ", messageId=" + messageId + ", channelId=" + channelId + ", pts=" + pts + ", sts=" + sts
-				+ ", deepLink=" + deepLink + ", userAgent=" + userAgent + ", bod=" + bod + ", notificationType="
-				+ notificationType + ", uniqueId=" + uniqueId + ", clientKey=" + clientKey + ", deviceDetails="
-				+ deviceDetails + ", make=" + make + ", model=" + model + ", automationId=" + automationId
-				+ ", eventType=" + eventType + ", atcm=" + atcm + ", atci=" + atci + ", oldToken=" + oldToken
-				+ ", coordinates=" + coordinates + ", apnClickLink=" + apnClickLink + ", clickLink=" + clickLink
-				+ ", clickLinkId=" + clickLinkId + ", msgId=" + msgId + ", cg=" + cg + ", cgRepeat=" + cgRepeat + "]";
+	public Integer getUserId() {
+		return userId;
 	}
-	
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public String getPushId() {
+		return pushId;
+	}
+
+	public void setPushId(String pushId) {
+		this.pushId = pushId;
+	}
+
+	public String getOsType() {
+		return osType;
+	}
+
+	public void setOsType(String osType) {
+		this.osType = osType;
+	}
+
+	public Integer getOsId() {
+		return osId;
+	}
+
+	public void setOsId(Integer osId) {
+		this.osId = osId;
+	}
+
+	public String getOsVersion() {
+		return osVersion;
+	}
+
+	public void setOsVersion(String osVersion) {
+		this.osVersion = osVersion;
+	}
+
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+
+	public String getSdkVersion() {
+		return sdkVersion;
+	}
+
+	public void setSdkVersion(String sdkVersion) {
+		this.sdkVersion = sdkVersion;
+	}
+
+	public String getTrId() {
+		return trId;
+	}
+
+	public void setTrId(String trId) {
+		this.trId = trId;
+	}
+
+	public List<Map<String, Object>> getPayload() {
+		return payload;
+	}
+
+	public void setPayload(List<Map<String, Object>> payload) {
+		this.payload = payload;
+	}
+
+	public Map<String, Object> getPayloadMap() {
+		return payloadMap;
+	}
+
+	public void setPayloadMap(Map<String, Object> payloadMap) {
+		this.payloadMap = payloadMap;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
+
+	public int getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(int channelId) {
+		this.channelId = channelId;
+	}
+
+	public String getDeepLink() {
+		return deepLink;
+	}
+
+	public void setDeepLink(String deepLink) {
+		this.deepLink = deepLink;
+	}
+
+	public String getNotificationType() {
+		return notificationType;
+	}
+
+	public void setNotificationType(String notificationType) {
+		this.notificationType = notificationType;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public String getClientKey() {
+		return clientKey;
+	}
+
+	public void setClientKey(String clientKey) {
+		this.clientKey = clientKey;
+	}
+
 }

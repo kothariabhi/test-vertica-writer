@@ -32,6 +32,8 @@ public class PR1_WEBPUSHACT extends AbstractTask {
 					data.add(webAct.getClickLinkId());
 				}
 			} else {
+				table = "";
+				header = "";
 				data = new ArrayList<>(Arrays.asList());
 			}
 			
