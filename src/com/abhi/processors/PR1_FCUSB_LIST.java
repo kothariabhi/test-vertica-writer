@@ -47,7 +47,8 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
 
 			if (toBeBlacklisted) {
-				LoggerUtil.pushForUpdateInVertica(table, "bl", "1", "uid = " + userId);
+				String attrTable = schema + ".userDetailsAttrs";
+				LoggerUtil.pushForUpdateInVertica(attrTable, "bl", "1", "uid = " + userId);
 			}
 
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));

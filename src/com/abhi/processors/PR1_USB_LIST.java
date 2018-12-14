@@ -39,7 +39,8 @@ public class PR1_USB_LIST extends AbstractTask {
 			}
 			String uids = IntStream.of(usb.getUserId()).mapToObj(Integer::toString).collect(Collectors.joining(","));
 			if (toBeBlacklisted) {
-				LoggerUtil.pushForUpdateInVertica(table, "bl", "1", "uid IN (" + uids + ")");
+				String attrTable = schema + ".userDetailsAttrs";
+				LoggerUtil.pushForUpdateInVertica(attrTable, "bl", "1", "uid IN (" + uids + ")");
 			}
 			
 			LoggerUtil.pushForFurtherProcessing(table, header, dataString);
