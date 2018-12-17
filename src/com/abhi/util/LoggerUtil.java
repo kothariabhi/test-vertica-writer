@@ -354,9 +354,8 @@ public class LoggerUtil {
 				return webAct.getTrId();
 			case "clid":
 				return webAct.getChannelId();
-			case "":
 			default:
-				return "";
+				return "NULL";
 		}
 	}
 

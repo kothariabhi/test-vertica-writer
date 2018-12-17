@@ -41,7 +41,7 @@ public class PR1_WEBACT extends AbstractTask {
 					}
 				} else {
 					String key = column.replaceFirst("vt_", "");
-					data.add(webAct.getTypeAwarePayload().get(key));
+					data.add(webAct.getTypeAwarePayload().getOrDefault(key, "NULL"));
 				}
 			}
 			
