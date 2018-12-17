@@ -18,13 +18,12 @@ public class PR1_BULKADD_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info("KafkaString : " + kafkaString);
 			BulkAddList bulkAddListRequest = (BulkAddList) LoggerUtil.getObjectFromJson(kafkaString, BulkAddList.class);
 			bulkUserADD(bulkAddListRequest, kafkaString, this.requestId);
-			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
+			logger.info("Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error("Error : " + e.getMessage(), e);
 		}
 	}
 

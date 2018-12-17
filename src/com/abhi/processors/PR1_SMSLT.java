@@ -29,7 +29,7 @@ public class PR1_SMSLT extends AbstractTask {
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			logger.error(requestId + " - Error : " + e.getMessage());
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

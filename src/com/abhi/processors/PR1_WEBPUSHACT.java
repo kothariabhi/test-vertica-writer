@@ -18,6 +18,11 @@ public class PR1_WEBPUSHACT extends AbstractTask {
 
 			logger.info(requestId + " - KafkaString : " + kafkaString);
 			WebAct webAct = (WebAct) LoggerUtil.getObjectFromJson(kafkaString, WebAct.class);
+			
+			if (webAct.getActivityId()  == LoggerUtil.PUSH_SUBSCRIBE || webAct.getActivityId() == LoggerUtil.PUSH_UNSUBSCRIBE ) {
+				return;
+			}
+			
 			String schema = "s_" + webAct.getClientId(), header, row = "", table;
 			long[] act = LoggerUtil.getDOWDayTimefromTS(webAct.getTs());
 			int[] bodData = LoggerUtil.getBod(String.valueOf(webAct.getBod()));
@@ -32,9 +37,31 @@ public class PR1_WEBPUSHACT extends AbstractTask {
 					data.add(webAct.getClickLinkId());
 				}
 			} else {
-				table = "";
-				header = "";
-				data = new ArrayList<>(Arrays.asList());
+				table = schema + "." + (webAct.isIdentified() ? LoggerUtil.ENGAGEMENT_TABLE : LoggerUtil.ANON_ENGAGEMENT_TABLE) + "_" + webAct.getActivityId();
+				List<String> columns = LoggerUtil.getTableColumns(table);
+				data = new ArrayList<Object>();
+				for (String column : columns) {
+					if (!column.startsWith("vt_")) {
+						if (column.equals("b")) {
+							data.add(bodData[2]);
+						} else if (column.equals("o")) {
+							data.add(bodData[1]);
+						} else if (column.equals("d")) {
+							data.add(bodData[0]);
+						} else if (column.equals("ad")) {
+							data.add(act[1]);
+						} else if (column.equals("adat")) {
+							data.add(act[3]);
+						} else {
+							Object systemData = LoggerUtil.getWebActField(webAct, column, PR1_WEBPUSHACT.class.getName());
+							data.add(systemData);
+						}
+					} else {
+						String key = column.replaceFirst("vt_", "");
+						data.add(webAct.getTypeAwarePayload().getOrDefault(key, null));
+					}
+				}
+				header = LoggerUtil.getListAsCsvString(columns);
 			}
 			
 			row = LoggerUtil.listToCsvString(row, data);

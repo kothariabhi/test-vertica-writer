@@ -17,7 +17,7 @@ public class PR1_SINGLEADD_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			System.out.println("KafkaString : " + kafkaString);
+			logger.info("KafkaString : " + kafkaString);
 			SingleAddList singleAddListRequest = (SingleAddList) LoggerUtil.getObjectFromJson(kafkaString,
 					SingleAddList.class);
 			int existing = singleAddListRequest.getExisting();
@@ -29,8 +29,7 @@ public class PR1_SINGLEADD_LIST extends AbstractTask {
 
 			System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			System.out.println("Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error("Error : " + e.getMessage(), e);
 		}
 	}
 

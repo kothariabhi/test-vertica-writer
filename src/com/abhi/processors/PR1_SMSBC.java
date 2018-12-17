@@ -1,5 +1,6 @@
 package com.abhi.processors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +20,19 @@ public class PR1_SMSBC extends AbstractTask {
 			logger.info(requestId + " - KafkaString : " + kafkaString);
 			SmsBc smsBc = (SmsBc) LoggerUtil.getObjectFromJson(kafkaString, SmsBc.class);
 			long[] act = LoggerUtil.getDOWDayTimefromTS(smsBc.getTs());
-			String schema = "s_" + smsBc.getClientId(), header = "uid,mid,aid,ad,adat";
-			String table = schema + "."
+			String schema = "s_" + smsBc.getClientId(), header = "uid,mid,aid,ad,adat", table;
+			/*String table = schema + "."
 					+ (smsBc.getStatus() != null && smsBc.getStatus().equals("drop") ? "userDetails_s_ssfd"
-							: "userDetails_s_ss");
-			List<Object> data = Arrays.asList(smsBc.getMsgId(), 0, act[1], act[3]);
+							: "userDetails_s_ss");*/
+			List<Object> data = new ArrayList<>(Arrays.asList(smsBc.getMsgId(), 0, act[1], act[3]));
+			if (smsBc.getStatus().equals("drop")) {
+				table = schema + "." + "userDetails_s_so";
+				header += ",st";
+				data.add("29");
+			} else {
+				table = schema + "." + "userDetails_s_ss";
+			}
+			
 			commonString = LoggerUtil.listToCsvString(datastring, data);
 			for (int userId : smsBc.getUserId()) {
 				List<Object> rows = Arrays.asList(userId + "," + commonString);
@@ -32,7 +41,7 @@ public class PR1_SMSBC extends AbstractTask {
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			logger.error(requestId + " - Error : " + e.getMessage());
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 

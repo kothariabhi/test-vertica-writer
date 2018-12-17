@@ -1,5 +1,6 @@
 package com.abhi.processors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class PR1_APN_DASHBOARD extends AbstractTask {
 			String table = schema + ( pq.isIdentified() ? ".userDetails_p_pdl" : ".anonUserDetails_p_pdl" );
 			long[] act = LoggerUtil.getDOWDayTimefromTS(pq.getTs());
 			int[] bodData = LoggerUtil.getBod(String.valueOf(pq.getBod()));
-			List<Object> data = Arrays.asList(pq.getUserId(), pq.getMessageId(), pq.getAutomationId(), bodData[2], bodData[1], 
-					bodData[0], act[1], act[3]);
+			List<Object> data = new ArrayList<>(Arrays.asList(pq.getUserId(), pq.getMessageId(), pq.getAutomationId(), bodData[2], 
+					bodData[1], bodData[0], act[1], act[3]));
 			if (pq.getAction().equals("open")) {
 				table = schema + ( pq.isIdentified() ? ".userDetails_p_po" : ".anonUserDetails_p_po" );
 				header += ",fid";

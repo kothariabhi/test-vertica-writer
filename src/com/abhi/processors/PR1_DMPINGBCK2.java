@@ -1,5 +1,6 @@
 package com.abhi.processors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,11 +28,15 @@ public class PR1_DMPINGBCK2 extends AbstractTask {
 				table = schema + ".userDetails_s_sn";
 			} else {
 				table = schema + ".userDetails_s_so";
+				header += ",st";
 			}
 			for (SmsDlr smsDlr : dlrMap.getDlrList()) {
 				long[] act = LoggerUtil.getDOWDayTimefromTS(Long.parseLong(smsDlr.getTs()));
-				List<Object> data = Arrays.asList(smsDlr.getUserid(), smsDlr.getMsgid(), smsDlr.getAutomationid(),
-						act[1], act[3]);
+				List<Object> data = new ArrayList<>(Arrays.asList(smsDlr.getUserid(), smsDlr.getMsgid(), smsDlr.getAutomationid(),
+						act[1], act[3]));
+				if (status.equals("smsother")) {
+					data.add(smsDlr.getStatuscode());
+				}
 				datastring = LoggerUtil.listToCsvString(datastring, data);
 			}
 

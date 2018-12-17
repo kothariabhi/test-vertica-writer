@@ -25,8 +25,7 @@ public class PR1_DEL_LISTUSER extends AbstractTask {
 			LoggerUtil.pushForDeleteInVertica(table, where);
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			logger.error(requestId + " - Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 	

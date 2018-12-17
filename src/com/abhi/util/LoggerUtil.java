@@ -21,9 +21,12 @@ import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 
 import com.abhi.pojo.PushQuery;
+import com.abhi.pojo.WebAct;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class LoggerUtil {
 	private static Logger logger = Logger.getLogger(LoggerUtil.class);
@@ -139,7 +142,7 @@ public class LoggerUtil {
 		Gson gson = new Gson();
 		return gson.fromJson(json, clas);
 	}
-
+	
 	public static long[] getDOWDayTimefromTS(long ts) throws ParseException {
 		String tsStr = String.valueOf(ts);
 		if ((tsStr).trim().length() == 14) {
@@ -331,6 +334,30 @@ public class LoggerUtil {
 
 		// TODO Auto-generated method stub
 		return columnData;
+	}
+	
+	public static Object getWebActField(WebAct webAct, String column, String type) {
+		switch(column) {
+			case "srcid":
+				return webAct.getSourceId();
+			case "snid":
+				return webAct.getSessionId();
+			case "et":
+				return webAct.getEventType();
+			case "mid":
+				return (type.equals("PR1_WEBPUSHACT")) ? webAct.getNotificationId() : webAct.getCampaignId();
+			case "fid":
+				return webAct.getClickLinkId();
+			case "ip":
+				return webAct.getIp();
+			case "trid":
+				return webAct.getTrId();
+			case "clid":
+				return webAct.getChannelId();
+			case "":
+			default:
+				return "";
+		}
 	}
 
 }

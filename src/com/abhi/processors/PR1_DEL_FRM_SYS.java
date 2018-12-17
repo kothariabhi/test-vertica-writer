@@ -26,8 +26,7 @@ private Logger logger = Logger.getLogger(this.getClass());
 			
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			logger.error(requestId + " - Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 	

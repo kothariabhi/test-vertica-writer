@@ -25,8 +25,7 @@ public class PR1_EMBC {
 			logger.info(embcList.toString() + " - Execution time " + (System.currentTimeMillis() - startTime));
 
 		} catch (Exception e) {
-			logger.error(" FAILED RPUSH " + queueName + " " + kafkaString);
-			e.printStackTrace();
+			logger.error(" FAILED RPUSH " + queueName + " " + kafkaString + ", Error : " + e.getMessage(), e);
 		}
 	}
 
@@ -60,25 +59,18 @@ public class PR1_EMBC {
 							dataString = dataString + delimiter + LoggerUtil.getListAsCsvString(data);
 						}
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						logger.error(e.getMessage(), e);
 					}
 					LoggerUtil.pushForFurtherProcessing(table, query, dataString);
 
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					logger.error("Error while iterating App Activity " + e.getMessage());
-					e.printStackTrace();
+					logger.error("Error while iterating App Activity " + e.getMessage(), e);
 				}
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("Error while inserting in App Activity table " + e.getMessage());
-			e.printStackTrace();
+			logger.error("Error while inserting in App Activity table " + e.getMessage(), e);
 		}
-		// TODO Auto-generated method stub
-
 	}
 
 }

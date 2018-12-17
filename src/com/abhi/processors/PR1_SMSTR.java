@@ -1,5 +1,6 @@
 package com.abhi.processors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,18 +20,20 @@ public class PR1_SMSTR extends AbstractTask {
 			String datastring = "";
 			SmsTr smsTr = (SmsTr) LoggerUtil.getObjectFromJson(kafkaString, SmsTr.class);
 			long[] act = LoggerUtil.getDOWDayTimefromTS(smsTr.getTs());
-			String schema = "s_" + smsTr.getClientId(), header = "uid,mid,aid,ad,adat";
-			String table = schema + "."
-					+ (smsTr.getStatus() != null && smsTr.getStatus().equals("drop") ? "userDetails_s_ssfd"
-							: "userDetails_s_ss");
-			List<Object> data = Arrays.asList(smsTr.getUserId(), smsTr.getMsgId(), smsTr.getAutomationId(), act[1],
-					act[3]);
+			String schema = "s_" + smsTr.getClientId(), header = "uid,mid,aid,ad,adat", table;
+			List<Object> data = new ArrayList<>(Arrays.asList(smsTr.getUserId(), smsTr.getMsgId(), smsTr.getAutomationId(), act[1], act[3]));
+			if (smsTr.getStatus() != null && smsTr.getStatus().equals("drop")) {
+				table = schema + "." + "userDetails_s_ssfd";
+				header += ",st";
+				data.add("29");
+			} else {
+				table = schema + "." + "userDetails_s_ss";
+			}
 			datastring = LoggerUtil.listToCsvString(datastring, data);
 			LoggerUtil.pushForFurtherProcessing(table, header, datastring);
 			logger.info(requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
-			logger.error(requestId + " - Error : " + e.getMessage());
-			e.printStackTrace();
+			logger.error(requestId + " - Error : " + e.getMessage(), e);
 		}
 	}
 
