@@ -16,8 +16,8 @@ public class PR1_WEBPUSHACT extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			WebAct webAct = (WebAct) LoggerUtil.getObjectFromJson(kafkaString, WebAct.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			WebAct webAct = (WebAct) LoggerUtil.getObjectFromJson(jsonPayload, WebAct.class);
 			
 			if (webAct.getActivityId()  == LoggerUtil.PUSH_SUBSCRIBE || webAct.getActivityId() == LoggerUtil.PUSH_UNSUBSCRIBE ) {
 				return;
@@ -75,7 +75,7 @@ public class PR1_WEBPUSHACT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_WEBPUSHACT object = new PR1_WEBPUSHACT();
-		object.kafkaString = "{\"typeAwarePayload\":{\"sts\":0,\"npv\":0,\"autoid\":0,\"mid\":272,\"pts\":0},\"sourceId\":876,\"automationId\":0,\"browserId\":1,\"notificationType\":\"webpush\",\"trId\":\"18740-272-0-0-181127112239-A\",\"activityId\":12,\"identified\":false,\"action\":\"delivered\",\"notificationId\":0,\"webGuid\":\"98a2daf4-0ccc-471a-a8bf-39214f19188c\",\"clientId\":18740,\"ip\":\"192.168.41.40\",\"tsDate\":1543297964000,\"eventType\":\"w\",\"userId\":35330,\"pts\":0,\"token\":\"dQCZK4N2TPU:APA91bEyTEpx_YrpZnbQ4vSHdV21KriBDWpLc2u0qzvfaNwiacCkUE54CAbhgc6DS7WcOkYpGEINz6UoYBnBuIuIsRh9C_H0vcdEEGjo8LFF3qzkFB9MAysoiHU3EfbK2r4hk_Kmfbpt\",\"sts\":0,\"bod\":1514,\"siteId\":\"118217387f12dbb115129d655f3044af\",\"ts\":181127112244}";
+		object.jsonPayload = "{\"typeAwarePayload\":{\"sts\":0,\"npv\":0,\"autoid\":0,\"mid\":272,\"pts\":0},\"sourceId\":876,\"automationId\":0,\"browserId\":1,\"notificationType\":\"webpush\",\"trId\":\"18740-272-0-0-181127112239-A\",\"activityId\":12,\"identified\":false,\"action\":\"delivered\",\"notificationId\":0,\"webGuid\":\"98a2daf4-0ccc-471a-a8bf-39214f19188c\",\"clientId\":18740,\"ip\":\"192.168.41.40\",\"tsDate\":1543297964000,\"eventType\":\"w\",\"userId\":35330,\"pts\":0,\"token\":\"dQCZK4N2TPU:APA91bEyTEpx_YrpZnbQ4vSHdV21KriBDWpLc2u0qzvfaNwiacCkUE54CAbhgc6DS7WcOkYpGEINz6UoYBnBuIuIsRh9C_H0vcdEEGjo8LFF3qzkFB9MAysoiHU3EfbK2r4hk_Kmfbpt\",\"sts\":0,\"bod\":1514,\"siteId\":\"118217387f12dbb115129d655f3044af\",\"ts\":181127112244}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

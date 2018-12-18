@@ -17,8 +17,8 @@ public class PR1_USB_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();	System.out.println("Time taken : " + (System.currentTimeMillis() - startTime));
 			String dataString = "";
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			UsbList usb = (UsbList) LoggerUtil.getObjectFromJson(kafkaString, UsbList.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			UsbList usb = (UsbList) LoggerUtil.getObjectFromJson(jsonPayload, UsbList.class);
 			long[] act = LoggerUtil.getDOWDayTimefromTS(usb.getTs());
 			String schema = "s_" + usb.getClientId(), header = "uid,mid,aid,ad,adat", table;
 			boolean toBeBlacklisted = true;
@@ -52,7 +52,7 @@ public class PR1_USB_LIST extends AbstractTask {
 	
 	public static void main(String[] args) {
 		PR1_USB_LIST object = new PR1_USB_LIST();
-		object.kafkaString = "{\"reason\":\"204\",\"clientId\":18740,\"bounceType\":\"HARDBOUNCE\",\"msgId\":929,\"type\":\"bounced\",\"userId\":[1265103],\"ts\":181128234505}";
+		object.jsonPayload = "{\"reason\":\"204\",\"clientId\":18740,\"bounceType\":\"HARDBOUNCE\",\"msgId\":929,\"type\":\"bounced\",\"userId\":[1265103],\"ts\":181128234505}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

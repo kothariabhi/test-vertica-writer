@@ -17,8 +17,8 @@ public class PR1_SMSBC extends AbstractTask {
 			long startTime = System.currentTimeMillis();
 			String datastring = "";
 			String commonString = "";
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			SmsBc smsBc = (SmsBc) LoggerUtil.getObjectFromJson(kafkaString, SmsBc.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			SmsBc smsBc = (SmsBc) LoggerUtil.getObjectFromJson(jsonPayload, SmsBc.class);
 			long[] act = LoggerUtil.getDOWDayTimefromTS(smsBc.getTs());
 			String schema = "s_" + smsBc.getClientId(), header = "uid,mid,aid,ad,adat", table;
 			/*String table = schema + "."
@@ -47,7 +47,7 @@ public class PR1_SMSBC extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_SMSBC object = new PR1_SMSBC();
-		object.kafkaString = "{\"clientId\":18230,\"msgId\":1160,\"skip\":false,\"userId\":[5,9,15,4789695],\"ts\":"
+		object.jsonPayload = "{\"clientId\":18230,\"msgId\":1160,\"skip\":false,\"userId\":[5,9,15,4789695],\"ts\":"
 				+ "181210174706,\"status\":\"drop\"}";
 		Thread thread = new Thread(object);
 		thread.start();

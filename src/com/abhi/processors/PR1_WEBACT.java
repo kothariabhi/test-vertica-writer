@@ -15,8 +15,8 @@ public class PR1_WEBACT extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			WebAct webAct = (WebAct) LoggerUtil.getObjectFromJson(kafkaString, WebAct.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			WebAct webAct = (WebAct) LoggerUtil.getObjectFromJson(jsonPayload, WebAct.class);
 			String schema = "s_" + webAct.getClientId();
 			long[] act = LoggerUtil.getDOWDayTimefromTS(webAct.getTs());
 			int[] bodData = LoggerUtil.getBod(String.valueOf(webAct.getBod()));
@@ -53,7 +53,7 @@ public class PR1_WEBACT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_WEBACT object = new PR1_WEBACT();
-		object.kafkaString = "{\"typeAwarePayload\":{\"sts\":69,\"tx\":1543300620888,\"npv\":1,\"autoid\":0,\"purl\":\"null\",\"title\":\"pankajnetcore\",\"url\":\"https://pankajnetcore.myshopify.com/\",\"pts\":0},\"sourceId\":1302,\"automationId\":0,\"browserId\":1,\"tx\":1543300620888,\"sessionid\":1543300620888,\"purl\":\"null\",\"title\":\"pankajnetcore\",\"activityId\":1,\"identified\":false,\"notificationId\":0,\"webGuid\":\"df7c85bd-11ba-462e-87fc-b61c20092b41\",\"clientId\":18870,\"ip\":\"127.0.0.1\",\"tsDate\":1543300876000,\"eventType\":\"w\",\"userId\":334,\"pts\":0,\"url\":\"https://pankajnetcore.myshopify.com/\",\"sts\":69,\"bod\":1514,\"siteId\":\"dc5b428f82126754b5f816d66debb4ee\",\"visit\":\"returning\",\"ts\":181127121116}";
+		object.jsonPayload = "{\"typeAwarePayload\":{\"sts\":69,\"tx\":1543300620888,\"npv\":1,\"autoid\":0,\"purl\":\"null\",\"title\":\"pankajnetcore\",\"url\":\"https://pankajnetcore.myshopify.com/\",\"pts\":0},\"sourceId\":1302,\"automationId\":0,\"browserId\":1,\"tx\":1543300620888,\"sessionid\":1543300620888,\"purl\":\"null\",\"title\":\"pankajnetcore\",\"activityId\":1,\"identified\":false,\"notificationId\":0,\"webGuid\":\"df7c85bd-11ba-462e-87fc-b61c20092b41\",\"clientId\":18870,\"ip\":\"127.0.0.1\",\"tsDate\":1543300876000,\"eventType\":\"w\",\"userId\":334,\"pts\":0,\"url\":\"https://pankajnetcore.myshopify.com/\",\"sts\":69,\"bod\":1514,\"siteId\":\"dc5b428f82126754b5f816d66debb4ee\",\"visit\":\"returning\",\"ts\":181127121116}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

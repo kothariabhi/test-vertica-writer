@@ -14,14 +14,18 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import com.abhi.pojo.NGNAppAct;
+import com.abhi.pojo.NGNWebAct;
 import com.abhi.pojo.PushQuery;
 import com.abhi.pojo.WebAct;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -388,6 +392,29 @@ public class LoggerUtil {
 		}
 	}
 
+	public static Object getNGNWebActField(NGNWebAct webAct, String column, String type) {
+		switch (column) {
+		case "srcid":
+			return webAct.getSourceId();
+		case "snid":
+			return webAct.getSid();
+		case "et":
+			return webAct.getEventType();
+		case "mid":
+			return (type.equals("PR1_WEBPUSHACT")) ? webAct.getNotificationId() : webAct.getCampaignId();
+		/*case "fid":
+			return webAct.getClickLinkId();*/
+		case "ip":
+			return webAct.getIp();
+		case "trid":
+			return webAct.getTrId();
+		case "clid":
+			return webAct.getChannelId();
+		default:
+			return "NULL";
+		}
+	}
+	
 	public static Object getNgnPojoField(NGNAppAct pq, String column, String type) {
 		Object columnData = "";
 		switch (column) {
@@ -424,6 +451,47 @@ public class LoggerUtil {
 
 		// TODO Auto-generated method stub
 		return columnData;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static List<Object> processPayload(Map<String, Object> payload, List<String> columnNames,
+			Map<String, Object> otherCol) {
+		Set entries = payload.entrySet();
+		Iterator entryIter = entries.iterator();
+		List<Object> data = new ArrayList<Object>();
+		while (entryIter.hasNext()) {
+			Map.Entry entry1 = (Map.Entry) entryIter.next();
+			Object key1 = entry1.getKey(); // Get the key from the entry.
+			Object value = entry1.getValue();
+			ArrayList<Object> arrlist = (ArrayList<Object>) value;
+			for (int k = 0; k < arrlist.size(); k++) {
+				Map<String, Object> payloadCol = new LinkedHashMap<String, Object>();
+				Iterator it = otherCol.entrySet().iterator();
+				while (it.hasNext()) {
+					Map.Entry pair = (Map.Entry) it.next();
+					payloadCol.put(pair.getKey().toString(), pair.getValue());
+				}
+				for (String column : columnNames) {
+					if (column.startsWith("vt_")) {
+						payloadCol.put(column, null);
+					}
+				}
+				Map<String, Object> eacharray = (Map<String, Object>) arrlist.get(k);
+				for (Map.Entry<String, Object> entry : eacharray.entrySet()) {
+					String hkey = entry.getKey().replaceAll(" ", "");
+					String nkey = "vt_" + key1 + "_" + hkey;
+					Object hvalue = entry.getValue();
+					if (columnNames.contains(nkey)) {
+						payloadCol.put(nkey, hvalue);
+					}
+				}
+				data.add(new ArrayList<Object>(payloadCol.values()));
+
+			}
+
+		}
+		return data;
+
 	}
 
 }

@@ -15,8 +15,8 @@ public class PR1_FCSENT extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			FcSent fcSent = (FcSent) LoggerUtil.getObjectFromJson(kafkaString, FcSent.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			FcSent fcSent = (FcSent) LoggerUtil.getObjectFromJson(jsonPayload, FcSent.class);
 			String datastring = "";
 			long[] act = LoggerUtil.getDOWDayTimefromTS(fcSent.getTs());
 			String schema = "s_" + fcSent.getClientId(), header = "uid,mid,aid,ad,adat";
@@ -36,7 +36,7 @@ public class PR1_FCSENT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_FCSENT object = new PR1_FCSENT();
-		object.kafkaString = "{\"automationId\":209,\"clientId\":18040,\"size\":0,\"msgId\":461,\"userId\":1383191,\"freqCapFlag\":0,\"ts\":181210172427,\"trId\":\"18040-461-1383191-209-181210172427\"}";
+		object.jsonPayload = "{\"automationId\":209,\"clientId\":18040,\"size\":0,\"msgId\":461,\"userId\":1383191,\"freqCapFlag\":0,\"ts\":181210172427,\"trId\":\"18040-461-1383191-209-181210172427\"}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

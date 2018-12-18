@@ -1,10 +1,7 @@
 package com.abhi.processors;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -18,9 +15,8 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			FcUsbList usb = (FcUsbList) LoggerUtil.getObjectFromJson(kafkaString, FcUsbList.class);
-			List<String> rows = new ArrayList<String>();
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			FcUsbList usb = (FcUsbList) LoggerUtil.getObjectFromJson(jsonPayload, FcUsbList.class);
 			String trIdArr[] = LoggerUtil.getTrIDDetails(usb.getTrId());
 			int clientId = Integer.valueOf(trIdArr[0]);
 			int msgId = Integer.valueOf(trIdArr[1]);
@@ -59,7 +55,7 @@ public class PR1_FCUSB_LIST extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_FCUSB_LIST object = new PR1_FCUSB_LIST();
-		object.kafkaString = "{\"trId\":\"56921-41-278953-6-181213100030\",\"reason\":\"172.217.197.26 - smtp;550 5.1.1 The email account that you tried to reach does not exist. Please try double-checking the recipient's email address for typos or unnecessary spaces. Learn more at https://support.google.com/mail/?p=NoSuchUs\",\"type\":\"bounced\"}";
+		object.jsonPayload = "{\"trId\":\"56921-41-278953-6-181213100030\",\"reason\":\"172.217.197.26 - smtp;550 5.1.1 The email account that you tried to reach does not exist. Please try double-checking the recipient's email address for typos or unnecessary spaces. Learn more at https://support.google.com/mail/?p=NoSuchUs\",\"type\":\"bounced\"}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

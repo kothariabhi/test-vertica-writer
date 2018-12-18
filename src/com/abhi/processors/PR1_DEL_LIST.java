@@ -15,8 +15,8 @@ public class PR1_DEL_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			DelList delList = (DelList) LoggerUtil.getObjectFromJson(kafkaString, DelList.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			DelList delList = (DelList) LoggerUtil.getObjectFromJson(jsonPayload, DelList.class);
 			String table = "s_" + delList.getClientId() + ".userDetailsLists";
 			String listIds = IntStream.of(delList.getList()).mapToObj(Integer::toString).collect(Collectors.joining(","));
 			String where = "lid in (" + listIds + ")";
@@ -30,7 +30,7 @@ public class PR1_DEL_LIST extends AbstractTask {
 	
 	public static void main(String[] args) {
 		PR1_DEL_LIST object = new PR1_DEL_LIST();
-		object.kafkaString = "{\"clientId\":14340,\"list\":[187]}";
+		object.jsonPayload = "{\"clientId\":14340,\"list\":[187]}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

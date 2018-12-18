@@ -15,8 +15,8 @@ private Logger logger = Logger.getLogger(this.getClass());
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			DelFrmSys delFrmSys = (DelFrmSys) LoggerUtil.getObjectFromJson(kafkaString, DelFrmSys.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			DelFrmSys delFrmSys = (DelFrmSys) LoggerUtil.getObjectFromJson(jsonPayload, DelFrmSys.class);
 			String schema = "s_" + delFrmSys.getClientId(), where;
 			String listTabel = schema + ".userDetailsLists", attrTable = schema + ".userDetailsAttrs";
 			String userIds = IntStream.of(delFrmSys.getUserId()).mapToObj(Integer::toString).collect(Collectors.joining(","));
@@ -32,7 +32,7 @@ private Logger logger = Logger.getLogger(this.getClass());
 	
 	public static void main(String[] args) {
 		PR1_DEL_FRM_SYS object = new PR1_DEL_FRM_SYS();
-		object.kafkaString = "{\"clientId\":19130,\"userId\":[93],\"ts\":181120175941}";
+		object.jsonPayload = "{\"clientId\":19130,\"userId\":[93],\"ts\":181120175941}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

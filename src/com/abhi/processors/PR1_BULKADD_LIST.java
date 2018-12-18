@@ -18,9 +18,9 @@ public class PR1_BULKADD_LIST extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info("KafkaString : " + kafkaString);
-			BulkAddList bulkAddListRequest = (BulkAddList) LoggerUtil.getObjectFromJson(kafkaString, BulkAddList.class);
-			bulkUserADD(bulkAddListRequest, kafkaString, this.requestId);
+			logger.info("KafkaString : " + jsonPayload);
+			BulkAddList bulkAddListRequest = (BulkAddList) LoggerUtil.getObjectFromJson(jsonPayload, BulkAddList.class);
+			bulkUserADD(bulkAddListRequest, jsonPayload, this.requestId);
 			logger.info("Time taken : " + (System.currentTimeMillis() - startTime));
 		} catch (Exception e) {
 			logger.error("Error : " + e.getMessage(), e);
@@ -29,7 +29,7 @@ public class PR1_BULKADD_LIST extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_BULKADD_LIST object = new PR1_BULKADD_LIST();
-		object.kafkaString = "{\"responseKey\":\"PR1_IMPORT_RESPONSE_39986_628155\",\"clientId\":14340,\"progressKey\":\"PR1_IMPORT_PROGRESS_39986_628155\",\"staticList\":0,\"dataType\":[\"int\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\"],\"statusFlags\":\"PR1_IMPORT_HANDSHAKE_39986_628155\",\"mobileCount\":2,\"list\":[2595,0],\"wc\":46,\"proIncrCount\":30,\"url\":\"http://pnstage.netcore.co.in:8080/yi/1544525928823_new.csv\",\"cwc\":2,\"jobId\":\"628155\",\"attr\":[\"userid\",\"domid\",\"MOBILE\",\"EMAIL\",\"att7\",\"att3\",\"att4\",\"att8\"],\"foreignKey\":\"MOBILE\",\"sendToEaf\":1,\"ts\":181030132945,\"emailCount\":2}";
+		object.jsonPayload = "{\"responseKey\":\"PR1_IMPORT_RESPONSE_39986_628155\",\"clientId\":14340,\"progressKey\":\"PR1_IMPORT_PROGRESS_39986_628155\",\"staticList\":0,\"dataType\":[\"int\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"text\"],\"statusFlags\":\"PR1_IMPORT_HANDSHAKE_39986_628155\",\"mobileCount\":2,\"list\":[2595,0],\"wc\":46,\"proIncrCount\":30,\"url\":\"http://pnstage.netcore.co.in:8080/yi/1544525928823_new.csv\",\"cwc\":2,\"jobId\":\"628155\",\"attr\":[\"userid\",\"domid\",\"MOBILE\",\"EMAIL\",\"att7\",\"att3\",\"att4\",\"att8\"],\"foreignKey\":\"MOBILE\",\"sendToEaf\":1,\"ts\":181030132945,\"emailCount\":2}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

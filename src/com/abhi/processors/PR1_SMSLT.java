@@ -15,9 +15,9 @@ public class PR1_SMSLT extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
 			String datastring = "";
-			SmsLt smsLt = (SmsLt) LoggerUtil.getObjectFromJson(kafkaString, SmsLt.class);
+			SmsLt smsLt = (SmsLt) LoggerUtil.getObjectFromJson(jsonPayload, SmsLt.class);
 			int[] bodData = LoggerUtil.getBod(String.valueOf(smsLt.getAgentCode()));
 			long[] act = LoggerUtil.getDOWDayTimefromTS(smsLt.getTs());
 			String schema = "s_" + smsLt.getClientId(), header = "uid,mid,aid,fid,b,o,d,ad,adat";
@@ -35,7 +35,7 @@ public class PR1_SMSLT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_SMSLT object = new PR1_SMSLT();
-		object.kafkaString = "{\"automationId\":0,\"clientId\":18740,\"linkId\":398,\"agentCode\":1514,\"ip\":\"192.168.41.85\",\"msgId\":94,\"linkText\":\"https://demo1.netcoresmartech.com/pssegment/\",\"userId\":1115538,\"trId\":\"\",\"ts\":181210185610}";
+		object.jsonPayload = "{\"automationId\":0,\"clientId\":18740,\"linkId\":398,\"agentCode\":1514,\"ip\":\"192.168.41.85\",\"msgId\":94,\"linkText\":\"https://demo1.netcoresmartech.com/pssegment/\",\"userId\":1115538,\"trId\":\"\",\"ts\":181210185610}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

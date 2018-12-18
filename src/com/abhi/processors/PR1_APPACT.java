@@ -14,8 +14,8 @@ public class PR1_APPACT extends AbstractTask {
 	public void run() {
 		try {
 			long startTime = System.currentTimeMillis();
-			logger.info(this.requestId + " - KafkaString : " + kafkaString);
-			PushQuery pq = (PushQuery) LoggerUtil.getObjectFromJson(kafkaString, PushQuery.class);
+			logger.info(this.requestId + " - KafkaString : " + jsonPayload);
+			PushQuery pq = (PushQuery) LoggerUtil.getObjectFromJson(jsonPayload, PushQuery.class);
 			pnInAppUActivity(pq, this.requestId);
 			addLastLocationAttribute(pq, requestId);
 			logger.info(this.requestId + " - Time taken : " + (System.currentTimeMillis() - startTime));
@@ -26,7 +26,7 @@ public class PR1_APPACT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_APPACT object = new PR1_APPACT();
-		object.kafkaString = "{\"appVersion\":\"1.0\",\"tx\":1538645152620,\"pushId\":\"aeb68041-563e-4e90-ab6c-4282163a62ae\",\"identified\":true,\"payload\":[{\"prqt\":1,\"price\":\"15000 Rs.\",\"name\":\"Nexus 5\",\"prid\":2}],\"appId\":\"1827b0219c3702b8f4380562192c237c\",\"model\":\"Lenovo K8 Plus\",\"lat\":\"17.805972\",\"eventId\":0,\"cts\":181004145552,\"lng\":\"83.279058\",\"tsDate\":\"Dec 14, 2018 2:30:37 PM\",\"osId\":1,\"sts\":0,\"bod\":2602,\"sdkVersion\":\"1.0.9\",\"automationId\":0,\"osVersion\":\"7.1.1\",\"identity\":\"kafkaload491936@m.pragatee.com\",\"osType\":\"Android\",\"make\":\"LENOVO\",\"channelId\":0,\"payloadMap\":{\"prqt\":1,\"price\":\"15000 Rs.\",\"name\":\"Nexus 5\",\"prid\":2},\"clientId\":14340,\"sessionId\":\"1538645120324\",\"userId\":5035884,\"pts\":0,\"atci\":0,\"ts\":181004145554}";
+		object.jsonPayload = "{\"appVersion\":\"1.0\",\"tx\":1538645152620,\"pushId\":\"aeb68041-563e-4e90-ab6c-4282163a62ae\",\"identified\":true,\"payload\":[{\"prqt\":1,\"price\":\"15000 Rs.\",\"name\":\"Nexus 5\",\"prid\":2}],\"appId\":\"1827b0219c3702b8f4380562192c237c\",\"model\":\"Lenovo K8 Plus\",\"lat\":\"17.805972\",\"eventId\":0,\"cts\":181004145552,\"lng\":\"83.279058\",\"tsDate\":\"Dec 14, 2018 2:30:37 PM\",\"osId\":1,\"sts\":0,\"bod\":2602,\"sdkVersion\":\"1.0.9\",\"automationId\":0,\"osVersion\":\"7.1.1\",\"identity\":\"kafkaload491936@m.pragatee.com\",\"osType\":\"Android\",\"make\":\"LENOVO\",\"channelId\":0,\"payloadMap\":{\"prqt\":1,\"price\":\"15000 Rs.\",\"name\":\"Nexus 5\",\"prid\":2},\"clientId\":14340,\"sessionId\":\"1538645120324\",\"userId\":5035884,\"pts\":0,\"atci\":0,\"ts\":181004145554}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}

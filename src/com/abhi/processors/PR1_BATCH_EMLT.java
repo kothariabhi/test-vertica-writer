@@ -16,8 +16,8 @@ public class PR1_BATCH_EMLT extends AbstractTask {
 		try {
 			long startTime = System.currentTimeMillis();
 
-			logger.info(requestId + " - KafkaString : " + kafkaString);
-			LTOTMap ltotMap = (LTOTMap) LoggerUtil.getObjectFromJson(kafkaString, LTOTMap.class);
+			logger.info(requestId + " - KafkaString : " + jsonPayload);
+			LTOTMap ltotMap = (LTOTMap) LoggerUtil.getObjectFromJson(jsonPayload, LTOTMap.class);
 			String openString = "", clickString = "";
 			String openHeader = "uid,mid,aid,b,o,d,ad,adat", clickHeader = "uid,mid,aid,fid,b,o,d,ad,adat";
 			String schema = "s_" + ltotMap.getClientId();
@@ -49,8 +49,8 @@ public class PR1_BATCH_EMLT extends AbstractTask {
 
 	public static void main(String[] args) {
 		PR1_BATCH_EMLT object = new PR1_BATCH_EMLT();
-		object.kafkaString = "{\"clientId\":18230,\"ltotList\":[{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5}]}";
-		object.kafkaString = "{\"clientId\":18230,\"ltotList\":[{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"activity\":\"open\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"lid\":45,\"activity\":\"click\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"activity\":\"open\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"lid\":45,\"activity\":\"click\"}]}";
+		object.jsonPayload = "{\"clientId\":18230,\"ltotList\":[{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5}]}";
+		object.jsonPayload = "{\"clientId\":18230,\"ltotList\":[{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"activity\":\"open\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"lid\":45,\"activity\":\"click\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"activity\":\"open\"},{\"cid\":18230,\"mid\":1160,\"automationId\":0,\"uid\":5,\"bod\":1615,\"ts\":181210055030,\"lid\":45,\"activity\":\"click\"}]}";
 		Thread thread = new Thread(object);
 		thread.start();
 	}
